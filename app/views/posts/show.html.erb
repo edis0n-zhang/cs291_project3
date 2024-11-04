@@ -1,0 +1,54 @@
+<h1>Post Details</h1>
+
+<p><%= simple_format(@post.content) %></p>
+<p>
+  <strong>Author:</strong> <%= @post.user.username %> | 
+  <strong>Last Updated:</strong> <%= @post.updated_at.strftime("%Y-%m-%d %H:%M:%S") %>
+</p>
+
+<% if @post.user == current_user %>
+  <p>
+    <%= link_to "Edit Post", edit_post_path(@post) %> | 
+    <%= link_to "Delete Post", post_path(@post), method: :delete, data: { confirm: "Are you sure?" } %>
+  </p>
+<% end %>
+
+<h2>Comments (<%= @post.comments.count %>)</h2>
+
+<ul>
+  <% @comments.each do |comment| %>
+    <li>
+      <p><%= simple_format(comment.content) %></p>
+      <p>
+        <strong>Author:</strong> <%= comment.user.username %> | 
+        <strong>Posted At:</strong> <%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+      </p>
+    </li>
+  <% end %>
+</ul>
+
+<h3>Add a Comment</h3>
+
+<%= form_with model: [@post, @comment], local: true do |form| %>
+  <% if @comment.errors.any? %>
+    <div style="color: red;">
+      <h4><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h4>
+      <ul>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div>
+    <%= form.label :content %><br>
+    <%= form.text_area :content, rows: 3, required: true %>
+  </div>
+  
+  <div>
+    <%= form.submit "Add Comment" %>
+  </div>
+<% end %>
+
+<%= link_to "Back to Posts", root_path %>

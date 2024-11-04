@@ -1,0 +1,711 @@
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2024-11-04 10:18:15.624577', '2024-11-04 10:18:15.624579') RETURNING "key"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20241104101751)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_username" ON "users" ("username")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20241104101751') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePosts (20241104101804)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "posts" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "content" text, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_5b5ddfd518"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_posts_on_user_id" ON "posts" ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20241104101804') RETURNING "version"[0m
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateComments (20241104101810)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "comments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "content" text, "user_id" integer NOT NULL, "post_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_03de2dc08c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_2fd19c0db7"
+FOREIGN KEY ("post_id")
+  REFERENCES "posts" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_comments_on_user_id" ON "comments" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE INDEX "index_comments_on_post_id" ON "comments" ("post_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20241104101810') RETURNING "version"[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:17:41 -0800
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/edisonzhang/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/railties-7.2.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/edisonzhang/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/railties-7.2.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.5ms | GC: 0.0ms)
+Completed 200 OK in 31ms (Views: 11.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 6.3ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2024-11-04 09:18:00 -0800
+  
+ActionController::RoutingError (No route matches [GET] "/login"):
+  
+Started GET "/favicon.ico" for 127.0.0.1 at 2024-11-04 09:18:00 -0800
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:18:15 -0800
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/edisonzhang/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/railties-7.2.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/edisonzhang/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/railties-7.2.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 1.0ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 1.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:22:53 -0800
+Processing by PostsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+Redirected to http://127.0.0.1:3000/login
+Filter chain halted as :require_login rendered or redirected
+Completed 302 Found in 49ms (ActiveRecord: 1.8ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2024-11-04 09:22:53 -0800
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 8.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 525.2ms | GC: 44.5ms)
+Completed 200 OK in 528ms (Views: 526.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 44.5ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2024-11-04 09:22:56 -0800
+Processing by SessionsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "username"=>"test", "commit"=>"Login"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "test"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/sessions_controller.rb:16:in `create'
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "test"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:16:in `create'
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["username", "test"], ["created_at", "2024-11-04 17:22:56.873851"], ["updated_at", "2024-11-04 17:22:56.873851"]]
+  ↳ app/controllers/sessions_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/sessions_controller.rb:16:in `create'
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 55ms (ActiveRecord: 10.5ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:22:56 -0800
+Processing by PostsController#index as TURBO_STREAM
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/views/posts/index.html.erb:20
+  Rendered posts/index.html.erb within layouts/application (Duration: 2.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.9ms | GC: 0.0ms)
+Completed 200 OK in 16ms (Views: 4.9ms | ActiveRecord: 2.0ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/posts/new" for 127.0.0.1 at 2024-11-04 09:22:59 -0800
+Processing by PostsController#new as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+Completed 406 Not Acceptable in 41ms (ActiveRecord: 0.9ms (1 query, 0 cached) | GC: 1.5ms)
+
+
+  
+ActionController::MissingExactTemplate (PostsController#new is missing a template for request formats: text/html):
+  
+actionpack (7.2.2) lib/action_controller/metal/implicit_render.rb:49:in `default_render'
+actionpack (7.2.2) lib/action_controller/metal/basic_implicit_render.rb:9:in `send_action'
+actionpack (7.2.2) lib/abstract_controller/base.rb:226:in `process_action'
+actionpack (7.2.2) lib/action_controller/metal/rendering.rb:193:in `process_action'
+actionpack (7.2.2) lib/abstract_controller/callbacks.rb:261:in `block in process_action'
+activesupport (7.2.2) lib/active_support/callbacks.rb:121:in `block in run_callbacks'
+turbo-rails (2.0.11) lib/turbo-rails.rb:24:in `with_request_id'
+turbo-rails (2.0.11) app/controllers/concerns/turbo/request_id_tracking.rb:10:in `turbo_tracking_request_id'
+activesupport (7.2.2) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+actiontext (7.2.2) lib/action_text/rendering.rb:25:in `with_renderer'
+actiontext (7.2.2) lib/action_text/engine.rb:71:in `block (4 levels) in <class:Engine>'
+activesupport (7.2.2) lib/active_support/callbacks.rb:130:in `instance_exec'
+activesupport (7.2.2) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+activesupport (7.2.2) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (7.2.2) lib/abstract_controller/callbacks.rb:260:in `process_action'
+actionpack (7.2.2) lib/action_controller/metal/rescue.rb:27:in `process_action'
+actionpack (7.2.2) lib/action_controller/metal/instrumentation.rb:77:in `block in process_action'
+activesupport (7.2.2) lib/active_support/notifications.rb:210:in `block in instrument'
+activesupport (7.2.2) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (7.2.2) lib/active_support/notifications.rb:210:in `instrument'
+actionpack (7.2.2) lib/action_controller/metal/instrumentation.rb:76:in `process_action'
+actionpack (7.2.2) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (7.2.2) lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+actionpack (7.2.2) lib/abstract_controller/base.rb:163:in `process'
+actionview (7.2.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (7.2.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (7.2.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (7.2.2) lib/action_dispatch/routing/route_set.rb:67:in `dispatch'
+actionpack (7.2.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:53:in `block in serve'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:133:in `block in find_routes'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:126:in `each'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:126:in `find_routes'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:34:in `serve'
+actionpack (7.2.2) lib/action_dispatch/routing/route_set.rb:896:in `call'
+rack (3.1.8) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.1.8) lib/rack/etag.rb:29:in `call'
+rack (3.1.8) lib/rack/conditional_get.rb:31:in `call'
+rack (3.1.8) lib/rack/head.rb:15:in `call'
+actionpack (7.2.2) lib/action_dispatch/http/permissions_policy.rb:38:in `call'
+actionpack (7.2.2) lib/action_dispatch/http/content_security_policy.rb:35:in `call'
+rack-session (2.0.0) lib/rack/session/abstract/id.rb:272:in `context'
+rack-session (2.0.0) lib/rack/session/abstract/id.rb:266:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/cookies.rb:704:in `call'
+activerecord (7.2.2) lib/active_record/migration.rb:674:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (7.2.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (7.2.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/executor.rb:16:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (7.2.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (7.2.2) lib/rails/rack/logger.rb:29:in `call'
+sprockets-rails (3.5.2) lib/sprockets/rails/quiet_assets.rb:17:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/remote_ip.rb:96:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/request_id.rb:33:in `call'
+rack (3.1.8) lib/rack/method_override.rb:28:in `call'
+rack (3.1.8) lib/rack/runtime.rb:24:in `call'
+activesupport (7.2.2) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (7.2.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (7.2.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/executor.rb:16:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.1.8) lib/rack/sendfile.rb:114:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (7.2.2) lib/rails/engine.rb:535:in `call'
+puma (6.4.3) lib/puma/configuration.rb:272:in `call'
+puma (6.4.3) lib/puma/request.rb:100:in `block in handle_request'
+puma (6.4.3) lib/puma/thread_pool.rb:378:in `with_force_shutdown'
+puma (6.4.3) lib/puma/request.rb:99:in `handle_request'
+puma (6.4.3) lib/puma/server.rb:464:in `process_client'
+puma (6.4.3) lib/puma/server.rb:245:in `block in run'
+puma (6.4.3) lib/puma/thread_pool.rb:155:in `block in spawn_thread'
+Started GET "/posts/new" for 127.0.0.1 at 2024-11-04 09:23:14 -0800
+Processing by PostsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+Completed 406 Not Acceptable in 16ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionController::MissingExactTemplate (PostsController#new is missing a template for request formats: text/html):
+  
+actionpack (7.2.2) lib/action_controller/metal/implicit_render.rb:49:in `default_render'
+actionpack (7.2.2) lib/action_controller/metal/basic_implicit_render.rb:9:in `send_action'
+actionpack (7.2.2) lib/abstract_controller/base.rb:226:in `process_action'
+actionpack (7.2.2) lib/action_controller/metal/rendering.rb:193:in `process_action'
+actionpack (7.2.2) lib/abstract_controller/callbacks.rb:261:in `block in process_action'
+activesupport (7.2.2) lib/active_support/callbacks.rb:121:in `block in run_callbacks'
+turbo-rails (2.0.11) lib/turbo-rails.rb:24:in `with_request_id'
+turbo-rails (2.0.11) app/controllers/concerns/turbo/request_id_tracking.rb:10:in `turbo_tracking_request_id'
+activesupport (7.2.2) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+actiontext (7.2.2) lib/action_text/rendering.rb:25:in `with_renderer'
+actiontext (7.2.2) lib/action_text/engine.rb:71:in `block (4 levels) in <class:Engine>'
+activesupport (7.2.2) lib/active_support/callbacks.rb:130:in `instance_exec'
+activesupport (7.2.2) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+activesupport (7.2.2) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (7.2.2) lib/abstract_controller/callbacks.rb:260:in `process_action'
+actionpack (7.2.2) lib/action_controller/metal/rescue.rb:27:in `process_action'
+actionpack (7.2.2) lib/action_controller/metal/instrumentation.rb:77:in `block in process_action'
+activesupport (7.2.2) lib/active_support/notifications.rb:210:in `block in instrument'
+activesupport (7.2.2) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (7.2.2) lib/active_support/notifications.rb:210:in `instrument'
+actionpack (7.2.2) lib/action_controller/metal/instrumentation.rb:76:in `process_action'
+actionpack (7.2.2) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (7.2.2) lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+actionpack (7.2.2) lib/abstract_controller/base.rb:163:in `process'
+actionview (7.2.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (7.2.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (7.2.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (7.2.2) lib/action_dispatch/routing/route_set.rb:67:in `dispatch'
+actionpack (7.2.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:53:in `block in serve'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:133:in `block in find_routes'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:126:in `each'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:126:in `find_routes'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:34:in `serve'
+actionpack (7.2.2) lib/action_dispatch/routing/route_set.rb:896:in `call'
+rack (3.1.8) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.1.8) lib/rack/etag.rb:29:in `call'
+rack (3.1.8) lib/rack/conditional_get.rb:31:in `call'
+rack (3.1.8) lib/rack/head.rb:15:in `call'
+actionpack (7.2.2) lib/action_dispatch/http/permissions_policy.rb:38:in `call'
+actionpack (7.2.2) lib/action_dispatch/http/content_security_policy.rb:35:in `call'
+rack-session (2.0.0) lib/rack/session/abstract/id.rb:272:in `context'
+rack-session (2.0.0) lib/rack/session/abstract/id.rb:266:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/cookies.rb:704:in `call'
+activerecord (7.2.2) lib/active_record/migration.rb:674:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (7.2.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (7.2.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/executor.rb:16:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (7.2.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (7.2.2) lib/rails/rack/logger.rb:29:in `call'
+sprockets-rails (3.5.2) lib/sprockets/rails/quiet_assets.rb:17:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/remote_ip.rb:96:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/request_id.rb:33:in `call'
+rack (3.1.8) lib/rack/method_override.rb:28:in `call'
+rack (3.1.8) lib/rack/runtime.rb:24:in `call'
+activesupport (7.2.2) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (7.2.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (7.2.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/executor.rb:16:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.1.8) lib/rack/sendfile.rb:114:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (7.2.2) lib/rails/engine.rb:535:in `call'
+puma (6.4.3) lib/puma/configuration.rb:272:in `call'
+puma (6.4.3) lib/puma/request.rb:100:in `block in handle_request'
+puma (6.4.3) lib/puma/thread_pool.rb:378:in `with_force_shutdown'
+puma (6.4.3) lib/puma/request.rb:99:in `handle_request'
+puma (6.4.3) lib/puma/server.rb:464:in `process_client'
+puma (6.4.3) lib/puma/server.rb:245:in `block in run'
+puma (6.4.3) lib/puma/thread_pool.rb:155:in `block in spawn_thread'
+Started GET "/posts/new" for 127.0.0.1 at 2024-11-04 09:24:13 -0800
+Processing by PostsController#new as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/new.html.erb within layouts/application
+  Rendered posts/new.html.erb within layouts/application (Duration: 5.6ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 18.1ms | GC: 1.2ms)
+Completed 200 OK in 52ms (Views: 19.0ms | ActiveRecord: 1.9ms (1 query, 0 cached) | GC: 1.5ms)
+
+
+Started POST "/posts" for 127.0.0.1 at 2024-11-04 09:24:18 -0800
+Processing by PostsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "post"=>{"content"=>"hihihihi"}, "commit"=>"New"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/posts_controller.rb:24:in `create'
+  [1m[36mPost Create (0.8ms)[0m  [1m[32mINSERT INTO "posts" ("content", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["content", "hihihihi"], ["user_id", 1], ["created_at", "2024-11-04 17:24:18.303320"], ["updated_at", "2024-11-04 17:24:18.303320"]]
+  ↳ app/controllers/posts_controller.rb:24:in `create'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/posts_controller.rb:24:in `create'
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 14ms (ActiveRecord: 1.8ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:24:18 -0800
+Processing by PostsController#index as TURBO_STREAM
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.6ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/views/posts/index.html.erb:20
+  [1m[36mCACHE User Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:25
+  Rendered posts/index.html.erb within layouts/application (Duration: 23.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 25.2ms | GC: 0.0ms)
+Completed 200 OK in 31ms (Views: 25.3ms | ActiveRecord: 1.2ms (4 queries, 1 cached) | GC: 0.0ms)
+
+
+Started GET "/logout" for 127.0.0.1 at 2024-11-04 09:24:21 -0800
+  
+AbstractController::ActionNotFound (The action 'not_found' could not be found for ApplicationController):
+  
+actionpack (7.2.2) lib/abstract_controller/base.rb:158:in `process'
+actionview (7.2.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (7.2.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (7.2.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (7.2.2) lib/action_dispatch/routing/route_set.rb:67:in `dispatch'
+actionpack (7.2.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:53:in `block in serve'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:133:in `block in find_routes'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:126:in `each'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:126:in `find_routes'
+actionpack (7.2.2) lib/action_dispatch/journey/router.rb:34:in `serve'
+actionpack (7.2.2) lib/action_dispatch/routing/route_set.rb:896:in `call'
+rack (3.1.8) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.1.8) lib/rack/etag.rb:29:in `call'
+rack (3.1.8) lib/rack/conditional_get.rb:31:in `call'
+rack (3.1.8) lib/rack/head.rb:15:in `call'
+actionpack (7.2.2) lib/action_dispatch/http/permissions_policy.rb:38:in `call'
+actionpack (7.2.2) lib/action_dispatch/http/content_security_policy.rb:35:in `call'
+rack-session (2.0.0) lib/rack/session/abstract/id.rb:272:in `context'
+rack-session (2.0.0) lib/rack/session/abstract/id.rb:266:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/cookies.rb:704:in `call'
+activerecord (7.2.2) lib/active_record/migration.rb:674:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (7.2.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (7.2.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/executor.rb:16:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (7.2.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (7.2.2) lib/rails/rack/logger.rb:29:in `call'
+sprockets-rails (3.5.2) lib/sprockets/rails/quiet_assets.rb:17:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/remote_ip.rb:96:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/request_id.rb:33:in `call'
+rack (3.1.8) lib/rack/method_override.rb:28:in `call'
+rack (3.1.8) lib/rack/runtime.rb:24:in `call'
+activesupport (7.2.2) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (7.2.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (7.2.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/executor.rb:16:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.1.8) lib/rack/sendfile.rb:114:in `call'
+actionpack (7.2.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (7.2.2) lib/rails/engine.rb:535:in `call'
+puma (6.4.3) lib/puma/configuration.rb:272:in `call'
+puma (6.4.3) lib/puma/request.rb:100:in `block in handle_request'
+puma (6.4.3) lib/puma/thread_pool.rb:378:in `with_force_shutdown'
+puma (6.4.3) lib/puma/request.rb:99:in `handle_request'
+puma (6.4.3) lib/puma/server.rb:464:in `process_client'
+puma (6.4.3) lib/puma/server.rb:245:in `block in run'
+puma (6.4.3) lib/puma/thread_pool.rb:155:in `block in spawn_thread'
+Started GET "/logout" for 127.0.0.1 at 2024-11-04 09:24:48 -0800
+Processing by SessionsController#destroy as HTML
+Redirected to http://127.0.0.1:3000/login
+Completed 302 Found in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2024-11-04 09:24:48 -0800
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 2.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.6ms | GC: 0.7ms)
+Completed 200 OK in 14ms (Views: 12.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.7ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2024-11-04 09:24:53 -0800
+Processing by SessionsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "username"=>"edison", "commit"=>"Login"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "edison"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/sessions_controller.rb:16:in `create'
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "edison"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:16:in `create'
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at") VALUES (?, ?, ?) RETURNING "id"[0m  [["username", "edison"], ["created_at", "2024-11-04 17:24:53.222890"], ["updated_at", "2024-11-04 17:24:53.222890"]]
+  ↳ app/controllers/sessions_controller.rb:16:in `create'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/sessions_controller.rb:16:in `create'
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 29ms (ActiveRecord: 2.4ms (3 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:24:53 -0800
+Processing by PostsController#index as TURBO_STREAM
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/views/posts/index.html.erb:20
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:25
+  Rendered posts/index.html.erb within layouts/application (Duration: 19.1ms | GC: 2.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 20.3ms | GC: 2.4ms)
+Completed 200 OK in 33ms (Views: 20.5ms | ActiveRecord: 0.4ms (4 queries, 0 cached) | GC: 2.4ms)
+
+
+Started GET "/?username=testtest&commit=Filter" for 127.0.0.1 at 2024-11-04 09:24:57 -0800
+Processing by PostsController#index as HTML
+  Parameters: {"username"=>"testtest", "commit"=>"Filter"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT "posts".* FROM "posts" INNER JOIN "users" ON "users"."id" = "posts"."user_id" WHERE "users"."username" = ? ORDER BY "posts"."created_at" DESC[0m  [["username", "testtest"]]
+  ↳ app/views/posts/index.html.erb:20
+  Rendered posts/index.html.erb within layouts/application (Duration: 9.5ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.7ms | GC: 0.1ms)
+Completed 200 OK in 13ms (Views: 10.9ms | ActiveRecord: 0.1ms (2 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/?username=test&commit=Filter" for 127.0.0.1 at 2024-11-04 09:25:00 -0800
+Processing by PostsController#index as HTML
+  Parameters: {"username"=>"test", "commit"=>"Filter"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" INNER JOIN "users" ON "users"."id" = "posts"."user_id" WHERE "users"."username" = ? ORDER BY "posts"."created_at" DESC[0m  [["username", "test"]]
+  ↳ app/views/posts/index.html.erb:20
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:25
+  Rendered posts/index.html.erb within layouts/application (Duration: 9.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.7ms | GC: 1.6ms)
+Completed 200 OK in 15ms (Views: 12.7ms | ActiveRecord: 0.2ms (4 queries, 0 cached) | GC: 1.8ms)
+
+
+Started GET "/posts/new" for 127.0.0.1 at 2024-11-04 09:25:04 -0800
+Processing by PostsController#new as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/new.html.erb within layouts/application
+  Rendered posts/new.html.erb within layouts/application (Duration: 3.1ms | GC: 1.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.6ms | GC: 1.9ms)
+Completed 200 OK in 12ms (Views: 6.3ms | ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 4.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:25:08 -0800
+Processing by PostsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/views/posts/index.html.erb:20
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:25
+  Rendered posts/index.html.erb within layouts/application (Duration: 15.9ms | GC: 5.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.3ms | GC: 7.8ms)
+Completed 200 OK in 25ms (Views: 19.3ms | ActiveRecord: 0.2ms (4 queries, 0 cached) | GC: 9.8ms)
+
+
+Started POST "/posts" for 127.0.0.1 at 2024-11-04 09:25:09 -0800
+Processing by PostsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "post"=>{"content"=>"test 2"}, "commit"=>"New"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/posts_controller.rb:24:in `create'
+  [1m[36mPost Create (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("content", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?) RETURNING "id"[0m  [["content", "test 2"], ["user_id", 2], ["created_at", "2024-11-04 17:25:09.348556"], ["updated_at", "2024-11-04 17:25:09.348556"]]
+  ↳ app/controllers/posts_controller.rb:24:in `create'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/posts_controller.rb:24:in `create'
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 12ms (ActiveRecord: 0.5ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:25:09 -0800
+Processing by PostsController#index as TURBO_STREAM
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/views/posts/index.html.erb:20
+  [1m[36mCACHE User Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:25
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:25
+  Rendered posts/index.html.erb within layouts/application (Duration: 12.4ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.1ms | GC: 0.2ms)
+Completed 200 OK in 15ms (Views: 13.1ms | ActiveRecord: 0.2ms (6 queries, 1 cached) | GC: 0.2ms)
+
+
+Started GET "/posts/2/edit" for 127.0.0.1 at 2024-11-04 09:25:10 -0800
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/posts_controller.rb:51:in `set_post'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/posts_controller.rb:58:in `authorize_user!'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/edit.html.erb within layouts/application
+  Rendered posts/edit.html.erb within layouts/application (Duration: 1.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.5ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 2.8ms | ActiveRecord: 0.1ms (3 queries, 1 cached) | GC: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:25:13 -0800
+Processing by PostsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/views/posts/index.html.erb:20
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:25
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:25
+  Rendered posts/index.html.erb within layouts/application (Duration: 10.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.5ms | GC: 0.4ms)
+Completed 200 OK in 14ms (Views: 12.6ms | ActiveRecord: 0.2ms (6 queries, 1 cached) | GC: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:25:14 -0800
+Processing by PostsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/views/posts/index.html.erb:20
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:25
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:25
+  Rendered posts/index.html.erb within layouts/application (Duration: 15.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 16.4ms | GC: 0.0ms)
+Completed 200 OK in 18ms (Views: 16.4ms | ActiveRecord: 0.2ms (6 queries, 1 cached) | GC: 0.0ms)
+
+
+Started PATCH "/posts/2" for 127.0.0.1 at 2024-11-04 09:25:14 -0800
+Processing by PostsController#update as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "post"=>{"content"=>"test test"}, "commit"=>"Edit", "id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/posts_controller.rb:51:in `set_post'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/posts_controller.rb:58:in `authorize_user!'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/posts_controller.rb:36:in `update'
+  [1m[36mPost Update (0.3ms)[0m  [1m[33mUPDATE "posts" SET "content" = ?, "updated_at" = ? WHERE "posts"."id" = ?[0m  [["content", "test test"], ["updated_at", "2024-11-04 17:25:14.573726"], ["id", 2]]
+  ↳ app/controllers/posts_controller.rb:36:in `update'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/posts_controller.rb:36:in `update'
+Redirected to http://127.0.0.1:3000/posts/2
+Completed 302 Found in 17ms (ActiveRecord: 0.5ms (4 queries, 1 cached) | GC: 0.0ms)
+
+
+Started GET "/posts/2" for 127.0.0.1 at 2024-11-04 09:25:14 -0800
+Processing by PostsController#show as TURBO_STREAM
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/posts_controller.rb:51:in `set_post'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/show.html.erb within layouts/application
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/posts/show.html.erb:5
+  [1m[36mComment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 2]]
+  ↳ app/views/posts/show.html.erb:16
+  [1m[36mComment Load (0.0ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = ? ORDER BY "comments"."created_at" ASC[0m  [["post_id", 2]]
+  ↳ app/views/posts/show.html.erb:19
+  Rendered posts/show.html.erb within layouts/application (Duration: 12.8ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 15.3ms | GC: 0.2ms)
+Completed 200 OK in 24ms (Views: 16.7ms | ActiveRecord: 0.2ms (5 queries, 1 cached) | GC: 0.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:25:18 -0800
+Processing by PostsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/views/posts/index.html.erb:20
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:25
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:25
+  Rendered posts/index.html.erb within layouts/application (Duration: 5.3ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.2ms | GC: 0.2ms)
+Completed 200 OK in 9ms (Views: 7.8ms | ActiveRecord: 0.2ms (6 queries, 1 cached) | GC: 0.2ms)
+
+
+Started GET "/posts/2" for 127.0.0.1 at 2024-11-04 09:26:29 -0800
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/posts_controller.rb:51:in `set_post'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/show.html.erb within layouts/application
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/posts/show.html.erb:5
+  [1m[36mComment Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 2]]
+  ↳ app/views/posts/show.html.erb:16
+  [1m[36mComment Load (0.0ms)[0m  [1m[34mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = ? ORDER BY "comments"."created_at" ASC[0m  [["post_id", 2]]
+  ↳ app/views/posts/show.html.erb:19
+  Rendered posts/show.html.erb within layouts/application (Duration: 10.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.5ms | GC: 0.3ms)
+Completed 200 OK in 13ms (Views: 11.9ms | ActiveRecord: 0.1ms (5 queries, 1 cached) | GC: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:26:31 -0800
+Processing by PostsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/views/posts/index.html.erb:20
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:25
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:25
+  Rendered posts/index.html.erb within layouts/application (Duration: 4.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.3ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 7.8ms | ActiveRecord: 0.2ms (6 queries, 1 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2024-11-04 09:26:31 -0800
+Processing by PostsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:21:in `current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering posts/index.html.erb within layouts/application
+  [1m[36mPost Load (0.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/views/posts/index.html.erb:20
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 2]]
+  ↳ app/views/posts/index.html.erb:25
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/posts/index.html.erb:24
+  [1m[36mComment Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "comments" WHERE "comments"."post_id" = ?[0m  [["post_id", 1]]
+  ↳ app/views/posts/index.html.erb:25
+  Rendered posts/index.html.erb within layouts/application (Duration: 2.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.0ms | GC: 0.0ms)
+Completed 200 OK in 10ms (Views: 3.0ms | ActiveRecord: 0.2ms (6 queries, 1 cached) | GC: 0.0ms)
+
+
