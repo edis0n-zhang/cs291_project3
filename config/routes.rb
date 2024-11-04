@@ -9,6 +9,5 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
   end
 
-  # Handle 404 for undefined routes
   match '*path', to: 'application#not_found', via: :all
 end
