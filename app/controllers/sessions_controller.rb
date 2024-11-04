@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     username = params[:username].strip
     if username.blank? || username.length < 3
       flash[:alert] = "Username must be at least 3 characters."
-      render :new
+      redirect_to login_path
       return
     end
 

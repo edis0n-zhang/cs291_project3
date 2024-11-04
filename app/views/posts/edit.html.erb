@@ -1,15 +1,8 @@
 <h1><%= action_name.capitalize %> Post</h1>
 
 <%= form_with model: @post, local: true do |form| %>
-  <% if @post.errors.any? %>
-    <div style="color: red;">
-      <h4><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h4>
-      <ul>
-        <% @post.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+  <% if flash[:alert] %>
+    <p style="color: red;"><%= flash[:alert] %></p>
   <% end %>
   
   <div>

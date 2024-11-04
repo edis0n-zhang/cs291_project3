@@ -1,11 +1,24 @@
 <h1>All Posts</h1>
 
-<p>
-  Logged in as <strong><%= current_user.username %></strong> | 
-  <%= link_to "Logout", logout_path, method: :delete %>
-</p>
-
 <%= link_to "New Post", new_post_path %>
+
+<div>
+  <hr/>
+  <% @posts.each do |post| %>
+    <p><%= simple_format(post.content) %></p>
+    <p>
+      <strong>Author:</strong> <%= post.user.username %> | 
+      <strong>Comments:</strong> <%= link_to post.comments.count, post_path(post) %> | 
+      <strong>Last Updated:</strong> <%= post.updated_at.strftime("%Y-%m-%d %H:%M:%S") %>
+    </p>
+    <% if post.user == current_user %>
+      <p>
+        <%= link_to "Edit", edit_post_path(post) %> 
+      </p>
+    <% end %>
+    <hr/>
+  <% end %>
+</div>
 
 <%= form_with url: root_path, method: :get, local: true do |form| %>
   <div>
@@ -16,21 +29,7 @@
   </div>
 <% end %>
 
-<ul>
-  <% @posts.each do |post| %>
-    <li>
-      <p><%= simple_format(post.content) %></p>
-      <p>
-        <strong>Author:</strong> <%= post.user.username %> | 
-        <strong>Comments:</strong> <%= link_to post.comments.count, post_path(post) %> | 
-        <strong>Last Updated:</strong> <%= post.updated_at.strftime("%Y-%m-%d %H:%M:%S") %>
-      </p>
-      <% if post.user == current_user %>
-        <p>
-          <%= link_to "Edit", edit_post_path(post) %> | 
-          <%= link_to "Delete", post_path(post), method: :delete, data: { confirm: "Are you sure?" } %>
-        </p>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+<p>
+  Logged in as <strong><%= current_user.username %></strong> | 
+  <%= link_to "Logout", logout_path, method: :delete %>
+</p>

@@ -24,7 +24,8 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to root_path, notice: "Post created successfully."
     else
-      render :new
+      flash[:alert] = "Posts may not reference presidential candidates or affect the election. Please try again."
+      redirect_to new_post_path
     end
   end
 
@@ -36,7 +37,8 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to @post, notice: "Post updated successfully."
     else
-      render :edit
+      flash[:alert] = "Post contains forbidden words or other errors. Please review and try again."
+      redirect_to edit_post_path(@post)
     end
   end
 
